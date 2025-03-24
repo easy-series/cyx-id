@@ -1,0 +1,75 @@
+spring:
+  application:
+    name: easy-id-demo
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    password: 123456
+    timeout: 5000
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+      shutdown-timeout: 100ms
+  main:
+    banner-mode: console
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    org.springframework.data.redis: DEBUG
+
+easy-id:
+  namespace: ${spring.application.name}
+  machine:
+    enabled: true
+    machine-bit: 10
+    instance-id: ${HOSTNAME:local}
+    distributor:
+      type: manual  # 暂时使用手动分配，避免Redis依赖
+      machine-id: 1
+  snowflake:
+    enabled: true
+    epoch: 1577808000000  # 2020-01-01 00:00:00.000
+    clock-backwards:
+      spin-threshold: 10
+      broken-threshold: 2000
+    provider:
+      # 自定义不同业务场景的雪花算法配置
+      order:
+        timestamp-bit: 41
+        machine-bit: 10
+        sequence-bit: 12
+      user:
+        timestamp-bit: 41
+        machine-bit: 8
+        sequence-bit: 14
+      # 适合前端安全使用的雪花算法配置
+      safeJs:
+        timestamp-bit: 41
+        machine-bit: 3
+        sequence-bit: 9
+  segment:
+    enabled: true
+    mode: chain    # 可选：normal, chain
+    chain:
+      safe-distance: 0.7
+      prefetch-worker:
+        core-pool-size: 2
+    distributor:
+      type: redis
+    provider:
+      # 自定义不同业务场景的号段配置
+      order:
+        offset: 10000
+        step: 100
+      user:
+        offset: 1000
+        step: 50
+      # 商品ID
+      product:
+        offset: 100000
+        step: 1000 
