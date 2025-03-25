@@ -283,7 +283,7 @@ public class RedisWorkerIdAllocator implements MachineIdAllocator {
                 try {
                     // 刷新过期时间
                     boolean success = connectionManager.execute(jedis -> {
-                        return jedis.expire(nodeKey, expireSeconds);
+                        return jedis.expire(nodeKey, expireSeconds) == 1L;
                     });
                     
                     if (!success) {

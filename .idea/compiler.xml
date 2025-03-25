@@ -6,8 +6,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="easy-id" />
+        <module name="cyx-id-snowflake" />
+        <module name="cyx-id-storage-api" />
+        <module name="cyx-id-storage-redis" />
+        <module name="cyx-id-spring-boot-starter" />
+        <module name="cyx-id-core" />
+        <module name="cyx-id-segment" />
+        <module name="cyx-id-benchmark" />
+        <module name="cyx-id-segment-chain" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="cyx-id-bom" target="22" />
+    </bytecodeTargetLevel>
   </component>
 </project>

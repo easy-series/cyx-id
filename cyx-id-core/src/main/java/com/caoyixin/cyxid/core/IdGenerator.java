@@ -36,4 +36,6 @@ public interface IdGenerator {
      * @return ID生成器名称
      */
     String getName();
-} 
+
+    String getType();
+}

@@ -8,9 +8,8 @@
     <artifactId>cyx-id</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    
+
     <modules>
-        <module>cyx-id-bom</module>
         <module>cyx-id-core</module>
         <module>cyx-id-snowflake</module>
         <module>cyx-id-segment</module>
@@ -20,13 +19,13 @@
         <module>cyx-id-spring-boot-starter</module>
         <module>cyx-id-benchmark</module>
     </modules>
-    
+
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        
+
         <!-- 依赖版本 -->
         <spring.version>5.3.23</spring.version>
         <spring-boot.version>2.7.5</spring-boot.version>
@@ -35,27 +34,57 @@
         <lombok.version>1.18.24</lombok.version>
         <slf4j.version>1.7.36</slf4j.version>
     </properties>
-    
+
     <dependencyManagement>
         <dependencies>
-            <!-- 内部模块依赖 -->
             <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>cyx-id-bom</artifactId>
+                <groupId>com.caoyixin</groupId>
+                <artifactId>cyx-id-core</artifactId>
                 <version>${project.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
-            
-            <!-- 外部依赖 -->
+
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-framework-bom</artifactId>
-                <version>${spring.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>com.caoyixin</groupId>
+                <artifactId>cyx-id-snowflake</artifactId>
+                <version>${project.version}</version>
             </dependency>
-            
+
+            <dependency>
+                <groupId>com.caoyixin</groupId>
+                <artifactId>cyx-id-segment</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.caoyixin</groupId>
+                <artifactId>cyx-id-segment-chain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.caoyixin</groupId>
+                <artifactId>cyx-id-storage-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.caoyixin</groupId>
+                <artifactId>cyx-id-storage-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.caoyixin</groupId>
+                <artifactId>cyx-id-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.caoyixin</groupId>
+                <artifactId>cyx-id-benchmark</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -63,25 +92,25 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            
+
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
-            
+
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
-            
+
             <dependency>
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
                 <version>${jedis.version}</version>
             </dependency>
-            
+
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter</artifactId>
@@ -90,7 +119,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
     <build>
         <plugins>
             <plugin>
