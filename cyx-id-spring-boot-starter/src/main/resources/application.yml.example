@@ -1,0 +1,87 @@
+cyx-id:
+  # 是否启用ID生成器
+  enabled: true
+  # 默认的ID生成器类型：snowflake, segment, segment-chain
+  type: snowflake
+  
+  # 雪花算法配置
+  snowflake:
+    # 是否启用雪花算法
+    enabled: true
+    # 纪元时间戳，毫秒，默认为2023-01-01 00:00:00
+    epoch: 1672502400000
+    # 工作节点配置
+    worker:
+      # 分配器类型：static（静态）, redis（Redis分配）
+      allocator: static
+      # 静态工作节点ID，仅在allocator=static时有效
+      id: 1
+      # 工作节点ID位数
+      bits: 10
+      # Redis分配配置
+      redis:
+        # 节点标识，默认为机器的hostname
+        node-key: ${spring.application.name:app}-${HOST:unknown}
+        # 最大节点ID
+        max-id: 1023
+        # 过期时间（秒）
+        expire-seconds: 60
+    # 序列号配置
+    sequence:
+      # 序列号位数
+      bits: 12
+    # 时钟回拨处理配置
+    clock-backwards:
+      # 自旋等待阈值（毫秒），当检测到的回拨时间小于此值时，采用自旋等待策略
+      spin-threshold: 10
+      # 异常阈值（毫秒），当检测到的回拨时间大于此值时，将抛出异常
+      broken-threshold: 20000
+  
+  # 分段ID配置
+  segment:
+    # 是否启用分段ID
+    enabled: false
+    # 分配器类型：redis（Redis分配）
+    allocator: redis
+    # 步长
+    step: 1000
+    # 安全距离百分比，当剩余ID数量小于此百分比时，触发异步加载下一个号段
+    safe-distance-percent: 30
+  
+  # 链式分段ID配置
+  segment-chain:
+    # 是否启用链式分段ID
+    enabled: false
+    # 分配器类型：redis（Redis分配）
+    allocator: redis
+    # 步长
+    step: 1000
+    # 安全距离百分比
+    safe-distance-percent: 30
+    # 最大链长度
+    max-chain-length: 10
+    # 预取周期（毫秒）
+    prefetch-period: 1000
+  
+  # Redis配置
+  redis:
+    # 主机地址
+    host: localhost
+    # 端口
+    port: 6379
+    # 密码
+    password: 
+    # 数据库索引
+    database: 0
+    # 连接超时（毫秒）
+    timeout: 2000
+    # 连接池配置
+    pool:
+      # 最大连接数
+      max-active: 8
+      # 最大空闲连接数
+      max-idle: 8
+      # 最小空闲连接数
+      min-idle: 0
+      # 最大等待时间（毫秒）
+      max-wait: -1 
